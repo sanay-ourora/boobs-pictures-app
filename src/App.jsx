@@ -11,18 +11,22 @@ const MAP_STYLE = {
   sources: {
     basemap: {
       type: "raster",
-      tiles: ["https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"],
+      tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"],
       tileSize: 256,
       attribution: "© OpenStreetMap contributors © CARTO"
     }
   },
   layers: [
-    { id: "ocean", type: "background", paint: { "background-color": "#071a23" } },
+    { id: "ocean", type: "background", paint: { "background-color": "#dce9e7" } },
     {
       id: "basemap",
       type: "raster",
       source: "basemap",
-      paint: { "raster-opacity": 0.72, "raster-saturation": -0.62, "raster-contrast": 0.12 }
+      paint: {
+        "raster-opacity": 0.96,
+        "raster-saturation": -0.34,
+        "raster-contrast": 0.08
+      }
     }
   ]
 };
@@ -77,6 +81,10 @@ export function App() {
         markerElement.type = "button";
         markerElement.className = "sighting-marker";
         markerElement.setAttribute("aria-label", `Open ${sighting.species} sighting at ${sighting.title}`);
+        const signal = document.createElement("span");
+        signal.className = "sighting-marker__signal";
+        signal.setAttribute("aria-hidden", "true");
+        markerElement.append(signal);
         markerElement.addEventListener("click", () => {
           setSelectedSighting(sighting);
           map.easeTo({

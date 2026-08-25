@@ -32,23 +32,36 @@ button { color: inherit; }
 .map-canvas { position: absolute; inset: 0; }
 
 .sighting-marker {
-  position: relative;
-  width: 17px;
-  height: 17px;
+  width: 38px;
+  height: 38px;
   padding: 0;
-  border: 2px solid #dff9f5;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sighting-marker__signal {
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #052530;
   border-radius: 50%;
   background: var(--cyan);
-  box-shadow: 0 0 0 9px rgba(15, 218, 236, 0.13), 0 0 30px rgba(15, 218, 236, 0.8);
-  cursor: pointer;
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.92), 0 0 0 10px rgba(15, 218, 236, 0.2), 0 3px 18px rgba(5, 37, 48, 0.45);
+  transition: transform 180ms ease, box-shadow 180ms ease;
   animation: signal-pulse 2.8s ease-in-out infinite;
 }
 
-.sighting-marker:hover,
-.sighting-marker:focus-visible {
+.sighting-marker:hover .sighting-marker__signal,
+.sighting-marker:focus-visible .sighting-marker__signal {
   transform: scale(1.28);
-  box-shadow: 0 0 0 13px rgba(15, 218, 236, 0.16), 0 0 38px rgba(15, 218, 236, 0.95);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 13px rgba(15, 218, 236, 0.3), 0 4px 24px rgba(5, 37, 48, 0.52);
+}
+
+.sighting-marker:focus-visible {
   outline: 0;
 }
 
@@ -57,7 +70,7 @@ button { color: inherit; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  box-shadow: inset 0 0 160px rgba(1, 10, 15, 0.58);
+  box-shadow: inset 0 0 140px rgba(1, 10, 15, 0.16);
 }
 
 .ocean-shade {
@@ -65,8 +78,8 @@ button { color: inherit; }
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(2, 14, 20, 0.72) 0%, rgba(2, 14, 20, 0.2) 36%, transparent 62%),
-    linear-gradient(180deg, rgba(2, 14, 20, 0.5), transparent 24%, transparent 72%, rgba(2, 14, 20, 0.34));
+    linear-gradient(90deg, rgba(2, 14, 20, 0.88) 0%, rgba(2, 14, 20, 0.68) 22%, rgba(2, 14, 20, 0.12) 45%, transparent 60%),
+    linear-gradient(180deg, rgba(2, 14, 20, 0.5), transparent 21%, transparent 76%, rgba(2, 14, 20, 0.2));
 }
 
 .app-header {
@@ -329,8 +342,8 @@ dd { margin: 0; font-size: 11px; }
 @keyframes panel-in { from { opacity: 0; transform: translateX(28px); } }
 @keyframes notice-in { from { opacity: 0; transform: translateY(18px) scale(.98); } }
 @keyframes signal-pulse {
-  0%, 100% { box-shadow: 0 0 0 7px rgba(15, 218, 236, 0.1), 0 0 22px rgba(15, 218, 236, 0.58); }
-  50% { box-shadow: 0 0 0 12px rgba(15, 218, 236, 0.17), 0 0 36px rgba(15, 218, 236, 0.9); }
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255,255,255,.92), 0 0 0 8px rgba(15,218,236,.14), 0 3px 18px rgba(5,37,48,.4); }
+  50% { box-shadow: 0 0 0 3px #fff, 0 0 0 13px rgba(15,218,236,.26), 0 4px 26px rgba(5,37,48,.5); }
 }
 
 @media (max-width: 900px) {
@@ -369,6 +382,11 @@ dd { margin: 0; font-size: 11px; }
 @keyframes sheet-in { from { opacity: 0; transform: translateY(28px); } }
 
 @media (max-width: 600px) {
+  .ocean-shade {
+    background:
+      linear-gradient(90deg, rgba(2, 14, 20, 0.9) 0%, rgba(2, 14, 20, 0.74) 42%, rgba(2, 14, 20, 0.24) 68%, transparent 86%),
+      linear-gradient(180deg, rgba(2, 14, 20, 0.5), transparent 21%, transparent 76%, rgba(2, 14, 20, 0.2));
+  }
   .brand span { display: none; }
   .primary-action span:first-child { font-size: 9px; }
   .sighting-panel { display: block; max-height: 64svh; }
