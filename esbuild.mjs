@@ -1,5 +1,5 @@
 import { context, build } from "esbuild";
-import { cp, mkdir, rm } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import process from "node:process";
 
 const isServe = process.argv.includes("--serve");
@@ -14,7 +14,7 @@ const buildOptions = {
   sourcemap: isServe,
   target: ["es2022"],
   outdir: "dist/assets",
-  entryNames: "app",
+  entryNames: isServe ? "app" : "app-[hash]",
   assetNames: "[name]-[hash]",
   loader: {
     ".png": "file",
@@ -42,5 +42,21 @@ if (isServe) {
   });
   console.log(`Local app: http://${server.host}:${server.port}`);
 } else {
-  await build(buildOptions);
+  const result = await build({ ...buildOptions, metafile: true });
+  const outputPaths = Object.keys(result.metafile.outputs);
+  const scriptPath = outputPaths.find((outputPath) => outputPath.endsWith(".js"));
+  const stylesheetPath = outputPaths.find((outputPath) => outputPath.endsWith(".css"));
+
+  if (!scriptPath || !stylesheetPath) {
+    throw new Error("Could not find the generated app assets.");
+  }
+
+  const htmlPath = "dist/index.html";
+  const html = await readFile(htmlPath, "utf8");
+  await writeFile(
+    htmlPath,
+    html
+      .replace("/assets/app.js", `/${scriptPath.replace("dist/", "")}`)
+      .replace("/assets/app.css", `/${stylesheetPath.replace("dist/", "")}`)
+  );
 }
