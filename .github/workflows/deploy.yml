@@ -31,7 +31,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch --orphan hostinger
-          git rm -rf .
+          git rm -rf . || true
           cp -R /tmp/boobs-pictures-app-dist/. .
           touch .nojekyll
           git add -A
