@@ -1,0 +1,23 @@
+{
+  "name": "boobs-pictures-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.mjs --serve",
+    "build": "node esbuild.mjs",
+    "check": "node esbuild.mjs --check",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "maplibre-gl": "6.6.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

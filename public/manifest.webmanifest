@@ -1,0 +1,9 @@
+{
+  "name": "Boobs Pictures Field Map",
+  "short_name": "Boobs Map",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#061720",
+  "theme_color": "#061720",
+  "description": "A community field map for booby seabird sightings."
+}

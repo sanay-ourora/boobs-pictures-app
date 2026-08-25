@@ -1,0 +1,34 @@
+name: Bug report
+description: Report broken or unexpected app behavior.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Explain what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How can we reproduce it?
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+  - type: textarea
+    id: context
+    attributes:
+      label: Screenshots or context
+      description: Do not include private locations, personal information, or credentials.
+  - type: checkboxes
+    id: conduct
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct.
+          required: true

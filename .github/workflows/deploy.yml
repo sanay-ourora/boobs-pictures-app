@@ -1,0 +1,39 @@
+name: Build deployment branch
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hostinger-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Publish static output
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cp -R dist /tmp/boobs-pictures-app-dist
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch --orphan hostinger
+          git rm -rf .
+          cp -R /tmp/boobs-pictures-app-dist/. .
+          touch .nojekyll
+          git add -A
+          git commit -m "Deploy ${GITHUB_SHA}"
+          git push --force origin hostinger
